@@ -1,0 +1,64 @@
+cells = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+number_turns = 0
+
+while True:
+    print('---------')
+    print('| ' + cells[0] + ' ' + cells[1] + ' ' + cells[2] + ' |')
+    print('| ' + cells[3] + ' ' + cells[4] + ' ' + cells[5] + ' |')
+    print('| ' + cells[6] + ' ' + cells[7] + ' ' + cells[8] + ' |')
+    print('---------')
+
+
+    def invalid_input():
+        for i in coordinates:
+            if i not in ('1', '2', '3', '4', '5', '6', '7', '8', '9', '0'):
+                print('Enter numbers!')
+                return True
+            if int(i) not in (1, 2, 3):
+                print('Coordinates should be from 1 to 3!')
+                return True
+            if len(coordinates) != 2:
+                return True
+
+    def game_finished():
+        runs = [[cells[0], cells[1], cells[2]], [cells[3], cells[4], cells[5]], [cells[6], cells[7], cells[8]],
+                [cells[0], cells[3], cells[6]], [cells[1], cells[4], cells[7]], [cells[2], cells[5], cells[8]],
+                [cells[0], cells[4], cells[8]], [cells[2], cells[4], cells[6]]]
+        for item in runs:
+            if item == ['X', 'X', 'X']:
+                print('X wins')
+                quit()
+
+        # when the field has three X in a row
+
+        for item in runs:
+            if item == ['O', 'O', 'O']:
+                print('O wins')
+                quit()
+        # when the field has three O in a row
+
+        if number_turns == 9:
+            print('Draw')
+            quit()
+
+        # draw
+    if number_turns != 0:
+        game_finished()
+
+    while True:
+        coordinates = input('Enter the coordinates: ').replace(' ', '')
+        if invalid_input():
+            continue
+
+        if cells[(int(coordinates[0]) - 1) + (-3 * (int(coordinates[1])) + 9)] == 'X':
+            print('This cell is occupied! Choose another one!')
+        if cells[(int(coordinates[0]) - 1) + (-3 * (int(coordinates[1])) + 9)] == 'O':
+            print('This cell is occupied! Choose another one!')
+        else:
+            break
+
+    if number_turns % 2 == 0 and cells[(int(coordinates[0]) - 1) + (-3 * (int(coordinates[1])) + 9)] == ' ':
+        cells[(int(coordinates[0]) - 1) + (-3 * (int(coordinates[1])) + 9)] = 'X'
+    elif cells[(int(coordinates[0]) - 1) + (-3 * (int(coordinates[1])) + 9)] == ' ':
+        cells[(int(coordinates[0]) - 1) + (-3 * (int(coordinates[1])) + 9)] = 'O'
+    number_turns += 1
